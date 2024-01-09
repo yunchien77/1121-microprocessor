@@ -1,0 +1,186 @@
+
+
+
+
+SIGNAL IF_op, ID_op, EX_op: std_logic_vector(3 downto 0);
+SIGNAL IF_rs, IF_rt, ID_rs, ID_rt, EX_rs, EX_rt: std_logic_vector(1 downto 0);
+SIGNAL ID_s, ID_t, ID_lm, EX_result: std_logic_vector(7 downto 0);
+SIGNAL IF_mux1,IF_mux2, ID_mux1, ID_mux2: std_logic;
+SIGNAL s_temp, t_temp, lm: std_logic_vector(7 downto 0);
+SIGNAL r0, r1, r2, r3: std_logic_vector(7 downto 0);
+
+begin
+
+IFetch: process
+begin
+	IF_op <= opcode;
+	if ID_
+	IF_rs <= rs;
+	IF_rt <= rt;
+	IF_LED <= 1;
+end process;
+
+IDecode: process
+begin
+	wait until clk'event and clk = '1';恩opopｏｐｏｏｐｄｄｆｄｆｓｋｄ
+	if opcode = "1111" then
+		ID_LED <= '0';
+		ID_op <= IF_op;
+	else
+	ID_LED <= '1';
+	if IF_op(3 downto 1) = "000" then
+		case IF_op(0) is
+			when '0' =>
+				ID_lm <= data;
+			when '1' =>
+				case rt is
+				when "00" =>
+					ID_lm <= r0;
+				when "01" =>
+					ID_lm <= r1;
+				when "10" =>
+					ID_lm <= r2;
+				when "11" =>
+					ID_lm <= r3;
+				end case;
+		end case;
+	else
+		case rs is 
+		when "00" =>
+			ID_s <= r0;
+		when "01" =>
+			ID_s <= r1;
+		when "10" =>
+			ID_s <= r2;
+		when "11" =>
+			ID_s <= r3;
+		end case;
+		
+		case rt is
+		when "00" =>
+					ID_t <= r0;
+				when "01" =>
+					ID_t <= r1;
+				when "10" =>
+					ID_t <= r2;
+				when "11" =>
+					ID_t <= r3;
+				end case;
+		end if;
+		
+		ID_op <= IF_op;
+		ID_rs <= rs;
+		ID_rt <= rt;
+		ID_mux1 <= IF_mux1;
+		ID_mux2 <= IF_mux2;
+		
+		end if;
+end process;
+
+divise: diviser PORT MAP(clk,'0', t_temp, s_temp, q);
+EXE:process
+begin
+	wait until clk'event and clk = '1';
+	if ID_op = "1111" then
+		EX_LED <= '0';
+		EX_op <= ID_op;
+		
+	else
+	EX_LED <= '1';
+	EXMux1 <= ID_mux1;
+	EXMux2 <= ID_mux2;
+	
+	if opcode(3 downto 1) = "000" then
+		EX_result <= ID_lm;
+		
+	else
+		case EXMux1 is
+		when '0' =>
+			s_temp <= ID_s;
+		when '1' =>
+			s_temp <= EX_result;
+		end case;
+		
+		case EXMux2 is
+		when '0' =>
+			t_temp <= ID_t;
+		when '1' =>
+			t_temp <= EX_result;
+		end case;
+		
+		case ID_op is
+            when "0010" =>
+              EX_result <= s_temp + t_temp;
+            when "0011" =>
+              EX_result <= s_temp - t_temp;
+            when "0100" =>
+              EX_result <= s_temp & t_temp;
+            when "0101" =>
+              EX_result <= s_temp or t_temp;
+            when "0110" =>
+					EX_result <= s_temp nor t_temp;
+				when "0111" =>
+					if   s_temp < t_temp then
+						 EX_result <= "00000001";
+					else
+						 EX_result <= "00000000";
+				   end if;
+				when "1000" =>
+              EX_result <= q;
+				 when others =>
+				 
+          end case;
+		end if;
+		EX_op <= ID_op;
+		EX_rs <= rs;
+		EX_rt <= rt;
+	end if;
+end process;
+
+WBack:process
+begin
+	wait until clk'event and clk = '1';
+	if EX_op = "1111" then
+		WB_LED <= '0';
+	else
+		WB_LED <= '1';
+		case EX_rs is
+		when "00" =>
+				r0 <= EX_result;
+			when "01" =>
+				r1 <= EX_result;
+			when "10" =>
+				r2 <= EX_result;
+			when "11" =>
+				r3 <= EX_result;
+			end case;
+		end if;
+end process;
+
+Hazard:process
+begin
+	wait until clk'event and clk = '1';
+	if ID_rs = IF_rs then
+		IF_mux1 <= '1';
+	else
+		IF_mux1 <= '0';
+	end if;
+	
+	if ID_rs = IF_rt then 
+		IF_mux2 <= '1';
+	else
+		IF_mux2 <= '0';
+	end if;
+end process;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

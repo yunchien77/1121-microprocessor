@@ -1,0 +1,17 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+USE ieee.std_logic_unsigned.all;
+USE work.course4_package.all;
+
+ENTITY ALU_7bits IS
+	PORT{
+	}
+END ALU_7bits;
+
+
+ARCHITECTURE main OF ALU_7bits IS
+
+
+
+
+END main;

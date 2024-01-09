@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Fri Sep 22 11:42:31 2023
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : seven_segment_pro
+Top-level Entity Name : seven_segment_pro
+Family : Cyclone IV E
+Total logic elements : 21
+    Total combinational functions : 21
+    Dedicated logic registers : 0
+Total registers : 0
+Total pins : 33
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
