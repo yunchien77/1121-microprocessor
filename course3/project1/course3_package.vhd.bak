@@ -1,0 +1,8 @@
+PACKAGE course3_package IS
+COMPONENT SevenSegment
+	PORT ( Z, Y, X, W : IN STD_LOGIC;
+			 a, b, c, d, e, f, g, h: OUT STD_LOGIC);
+END COMPONENT ;
+
+
+END SevenSegment_package;

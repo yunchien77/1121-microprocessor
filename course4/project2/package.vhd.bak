@@ -1,0 +1,10 @@
+LIBRARY ieee;
+USE ieee.std_logic.1164.all;
+
+PACKAGE course4_package IS
+
+COMPONENT xxxxx IS
+	PORT{
+	};
+	
+END xxxxx;

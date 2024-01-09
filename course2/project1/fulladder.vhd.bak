@@ -1,0 +1,9 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+USE work.course2_package.all;
+
+ENTITY fulladder IS
+	PORT(	A: in std_logic_vector(7 downto 0);
+			B: in std_logic_vector(7 downto 0);
+			S: in std_logic_vector(7 downto 0));
+END example;

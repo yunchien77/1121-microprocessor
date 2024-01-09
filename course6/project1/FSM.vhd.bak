@@ -1,0 +1,51 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity FSM is
+	GENERIC ( N : INTEGER := 3);
+	port(
+		clk, reset, w: in std_logic;
+		output: out std_logic_vector(N-1 downto 0)
+		);
+end FSM;
+
+architecture main of FSM is
+	signal s : std_logic_vector(N-1 downto 0);
+begin
+	process
+	begin
+		WAIT UNTIL Clk'EVENT AND clk = '1';
+		if reset = '1' then
+			s <= "000";
+		else
+			if w = '1' then
+				if s = "000" then
+					s <= "001";
+				elsif s = "001" then
+					s <= "011";
+				elsif s = "011" then
+					s <= "100";
+				elsif s = "010" then
+					s <= "100";
+				else
+					s <= "101";
+				end if;
+			else
+				if s = "000" then
+					s <= "000";
+				elsif s = "001" then
+					s <= "010";
+				elsif s = "011" then
+					s <= "100";
+				elsif s = "010" then
+					s <= "100";
+				else
+					s <= "001";
+				end if;
+			end if
+		end if;
+				
+				
+
+end main;
