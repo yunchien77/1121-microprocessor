@@ -48,3 +48,4 @@ git commit -m "Initial commit"
 git push origin master
 ```
 如果你的預設分支不是 master，請將它替換為你的預設分支名稱
+要將資料夾上傳到主分支，將master改成main
