@@ -1,5 +1,5 @@
 Analysis & Synthesis report for pipeline
-Fri Jan 05 11:47:40 2024
+Fri Jan 12 12:14:33 2024
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -13,12 +13,14 @@ Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. General Register Statistics
-  9. Multiplexer Restructuring Statistics (Restructuring Performed)
- 10. Port Connectivity Checks: "diviser:divise"
- 11. Post-Synthesis Netlist Statistics for Top Partition
- 12. Elapsed Time Per Partition
- 13. Analysis & Synthesis Messages
+  8. Registers Removed During Synthesis
+  9. General Register Statistics
+ 10. Inverted Register Statistics
+ 11. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 12. Port Connectivity Checks: "diviser:divise"
+ 13. Post-Synthesis Netlist Statistics for Top Partition
+ 14. Elapsed Time Per Partition
+ 15. Analysis & Synthesis Messages
 
 
 
@@ -44,16 +46,16 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Fri Jan 05 11:47:39 2024       ;
+; Analysis & Synthesis Status        ; Successful - Fri Jan 12 12:14:32 2024       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; pipeline                                    ;
 ; Top-level Entity Name              ; pipeline                                    ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 377                                         ;
-;     Total combinational functions  ; 317                                         ;
-;     Dedicated logic registers      ; 165                                         ;
-; Total registers                    ; 165                                         ;
-; Total pins                         ; 63                                          ;
+; Total logic elements               ; 449                                         ;
+;     Total combinational functions  ; 355                                         ;
+;     Dedicated logic registers      ; 189                                         ;
+; Total registers                    ; 189                                         ;
+; Total pins                         ; 81                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 0                                           ;
 ; Embedded Multiplier 9-bit elements ; 0                                           ;
@@ -181,30 +183,30 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimated Total logic elements              ; 377       ;
+; Estimated Total logic elements              ; 449       ;
 ;                                             ;           ;
-; Total combinational functions               ; 317       ;
+; Total combinational functions               ; 355       ;
 ; Logic element usage by number of LUT inputs ;           ;
-;     -- 4 input functions                    ; 184       ;
-;     -- 3 input functions                    ; 86        ;
-;     -- <=2 input functions                  ; 47        ;
+;     -- 4 input functions                    ; 232       ;
+;     -- 3 input functions                    ; 71        ;
+;     -- <=2 input functions                  ; 52        ;
 ;                                             ;           ;
 ; Logic elements by mode                      ;           ;
-;     -- normal mode                          ; 259       ;
+;     -- normal mode                          ; 297       ;
 ;     -- arithmetic mode                      ; 58        ;
 ;                                             ;           ;
-; Total registers                             ; 165       ;
-;     -- Dedicated logic registers            ; 165       ;
+; Total registers                             ; 189       ;
+;     -- Dedicated logic registers            ; 189       ;
 ;     -- I/O registers                        ; 0         ;
 ;                                             ;           ;
-; I/O pins                                    ; 63        ;
+; I/O pins                                    ; 81        ;
 ;                                             ;           ;
 ; Embedded Multiplier 9-bit elements          ; 0         ;
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
-; Maximum fan-out                             ; 165       ;
-; Total fan-out                               ; 1657      ;
-; Average fan-out                             ; 2.73      ;
+; Maximum fan-out                             ; 189       ;
+; Total fan-out                               ; 1895      ;
+; Average fan-out                             ; 2.68      ;
 +---------------------------------------------+-----------+
 
 
@@ -213,8 +215,8 @@ refer to the applicable agreement for further details.
 +-----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------+---------------+--------------+
 ; Compilation Hierarchy Node  ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name              ; Entity Name   ; Library Name ;
 +-----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------+---------------+--------------+
-; |pipeline                   ; 317 (176)           ; 165 (114)                 ; 0           ; 0            ; 0       ; 0         ; 63   ; 0            ; |pipeline                        ; pipeline      ; work         ;
-;    |diviser:divise|         ; 99 (99)             ; 51 (51)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |pipeline|diviser:divise         ; diviser       ; work         ;
+; |pipeline                   ; 355 (212)           ; 189 (138)                 ; 0           ; 0            ; 0       ; 0         ; 81   ; 0            ; |pipeline                        ; pipeline      ; work         ;
+;    |diviser:divise|         ; 101 (101)           ; 51 (51)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |pipeline|diviser:divise         ; diviser       ; work         ;
 ;    |seven_segment:show_bus| ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |pipeline|seven_segment:show_bus ; seven_segment ; work         ;
 ;    |seven_segment:show_rs|  ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |pipeline|seven_segment:show_rs  ; seven_segment ; work         ;
 ;    |seven_segment:show_rt|  ; 14 (14)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |pipeline|seven_segment:show_rt  ; seven_segment ; work         ;
@@ -222,34 +224,73 @@ refer to the applicable agreement for further details.
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
++--------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                             ;
++---------------------------------------+----------------------------------------+
+; Register name                         ; Reason for Removal                     ;
++---------------------------------------+----------------------------------------+
+; IF1_mux2[1]                           ; Stuck at GND due to stuck port data_in ;
+; IF1_mux1[1]                           ; Stuck at GND due to stuck port data_in ;
+; idh1                                  ; Merged with IF_mux1[1]                 ;
+; ifh1                                  ; Merged with IF1_mux1[0]                ;
+; idh2                                  ; Merged with IF_mux2[1]                 ;
+; ifh2                                  ; Merged with IF1_mux2[0]                ;
+; Total Number of Removed Registers = 6 ;                                        ;
++---------------------------------------+----------------------------------------+
+
+
 +------------------------------------------------------+
 ; General Register Statistics                          ;
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 165   ;
+; Total registers                              ; 189   ;
 ; Number of registers using Synchronous Clear  ; 0     ;
 ; Number of registers using Synchronous Load   ; 1     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 130   ;
+; Number of registers using Clock Enable       ; 131   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                      ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output            ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |pipeline|ID_s[2]                     ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; Yes        ; |pipeline|diviser:divise|remainder[4] ;
-; 6:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |pipeline|diviser:divise|remainder[9] ;
-; 17:1               ; 7 bits    ; 77 LEs        ; 28 LEs               ; 49 LEs                 ; Yes        ; |pipeline|EX_result[1]                ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pipeline|Mux56                       ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pipeline|Mux68                       ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pipeline|Mux13                       ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
++---------------------------------------------------+
+; Inverted Register Statistics                      ;
++-----------------------------------------+---------+
+; Inverted Register                       ; Fan out ;
++-----------------------------------------+---------+
+; EX_op[0]                                ; 1       ;
+; EX_op[1]                                ; 1       ;
+; EX_op[2]                                ; 1       ;
+; EX_op[3]                                ; 1       ;
+; IF_op[0]                                ; 11      ;
+; IF_op[1]                                ; 4       ;
+; IF_op[2]                                ; 4       ;
+; IF_op[3]                                ; 4       ;
+; ID_op[3]                                ; 12      ;
+; ID_op[2]                                ; 20      ;
+; ID_op[0]                                ; 20      ;
+; ID_op[1]                                ; 12      ;
+; Total number of inverted registers = 12 ;         ;
++-----------------------------------------+---------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                       ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |pipeline|ID_s[7]                      ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pipeline|IF1_mux2[0]                  ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; Yes        ; |pipeline|diviser:divise|remainder[6]  ;
+; 6:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |pipeline|diviser:divise|remainder[13] ;
+; 21:1               ; 7 bits    ; 98 LEs        ; 42 LEs               ; 56 LEs                 ; Yes        ; |pipeline|EX_result[4]                 ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pipeline|Mux80                        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pipeline|Mux88                        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pipeline|Mux31                        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pipeline|Mux32                        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pipeline|Mux8                         ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
 
 
 +--------------------------------------------+
@@ -266,23 +307,23 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; boundary_port         ; 63                          ;
-; cycloneiii_ff         ; 165                         ;
-;     ENA               ; 130                         ;
+; boundary_port         ; 81                          ;
+; cycloneiii_ff         ; 189                         ;
+;     ENA               ; 131                         ;
 ;     SLD               ; 1                           ;
-;     plain             ; 34                          ;
-; cycloneiii_lcell_comb ; 317                         ;
+;     plain             ; 57                          ;
+; cycloneiii_lcell_comb ; 355                         ;
 ;     arith             ; 58                          ;
 ;         2 data inputs ; 30                          ;
 ;         3 data inputs ; 28                          ;
-;     normal            ; 259                         ;
-;         1 data inputs ; 2                           ;
-;         2 data inputs ; 15                          ;
-;         3 data inputs ; 58                          ;
-;         4 data inputs ; 184                         ;
+;     normal            ; 297                         ;
+;         1 data inputs ; 6                           ;
+;         2 data inputs ; 16                          ;
+;         3 data inputs ; 43                          ;
+;         4 data inputs ; 232                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 5.60                        ;
-; Average LUT depth     ; 3.11                        ;
+; Max LUT depth         ; 8.70                        ;
+; Average LUT depth     ; 4.31                        ;
 +-----------------------+-----------------------------+
 
 
@@ -301,12 +342,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Fri Jan 05 11:47:16 2024
+    Info: Processing started: Fri Jan 12 12:14:03 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off pipeline -c pipeline
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 2 design units, including 1 entities, in source file pipeline.vhd
-    Info (12022): Found design unit 1: pipeline-main File: E:/microprocessor/final/pipeline.vhd Line: 19
+    Info (12022): Found design unit 1: pipeline-main File: E:/microprocessor/final/pipeline.vhd Line: 22
     Info (12023): Found entity 1: pipeline File: E:/microprocessor/final/pipeline.vhd Line: 7
 Info (12021): Found 2 design units, including 1 entities, in source file seven_segment.vhd
     Info (12022): Found design unit 1: seven_segment-LogicFunc File: E:/microprocessor/final/seven_segment.vhd Line: 11
@@ -317,19 +358,19 @@ Info (12021): Found 2 design units, including 1 entities, in source file diviser
     Info (12022): Found design unit 1: diviser-main File: E:/microprocessor/final/diviser.vhd Line: 15
     Info (12023): Found entity 1: diviser File: E:/microprocessor/final/diviser.vhd Line: 7
 Info (12127): Elaborating entity "pipeline" for the top level hierarchy
-Info (12128): Elaborating entity "diviser" for hierarchy "diviser:divise" File: E:/microprocessor/final/pipeline.vhd Line: 99
-Info (12128): Elaborating entity "seven_segment" for hierarchy "seven_segment:show_rs" File: E:/microprocessor/final/pipeline.vhd Line: 207
+Info (12128): Elaborating entity "diviser" for hierarchy "diviser:divise" File: E:/microprocessor/final/pipeline.vhd Line: 180
+Info (12128): Elaborating entity "seven_segment" for hierarchy "seven_segment:show_rs" File: E:/microprocessor/final/pipeline.vhd Line: 290
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 451 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 542 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 17 input pins
-    Info (21059): Implemented 46 output pins
-    Info (21061): Implemented 388 logic cells
+    Info (21059): Implemented 64 output pins
+    Info (21061): Implemented 461 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4788 megabytes
-    Info: Processing ended: Fri Jan 05 11:47:41 2024
-    Info: Elapsed time: 00:00:25
-    Info: Total CPU time (on all processors): 00:00:28
+    Info: Peak virtual memory: 4786 megabytes
+    Info: Processing ended: Fri Jan 12 12:14:33 2024
+    Info: Elapsed time: 00:00:30
+    Info: Total CPU time (on all processors): 00:00:27
 
 
